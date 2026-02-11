@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+<head><base href="https://glcdn.githack.com/3kh0/3kh0-assets/-/raw/main/handshakes/"/>
+<meta charset="utf-8"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title>Handshakes</title>
+<link href="./splash.jpg" rel="icon"/>
+</head>
+<body style="text-align: center">
+<canvas height="800" id="unity-canvas" style="width: 1200px; height: 800px; background: #FECC80" width="1200"></canvas>
+<script src="Build/WebGL.loader.js"></script>
+
+<script>
+      createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "Build/WebGL.data",
+        frameworkUrl: "Build/WebGL.framework.js",
+        codeUrl: "Build/WebGL.wasm",
+        symbolsUrl: "Build/WebGL.symbols.json",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "Pet Pumpkin, Damaskino, Trumpetguy",
+        productName: "Handshakes",
+        productVersion: "1.1.3",
+        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
+        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+      });
+    </script>
+</body>
+</html><!-- hi people
+r0bb13 here
+at least yall know how to open html -->

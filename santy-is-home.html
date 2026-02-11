@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+<head><base href="https://glcdn.githack.com/3kh0/3kh0-assets/-/raw/main/santy-is-home/"/>
+<meta charset="utf-8"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<link href="./splash.png" rel="icon"/>
+<title>Santy is Home</title>
+</head>
+<body style="text-align: center;">
+<canvas height="720" id="unity-canvas" style="width: 1280px; height: 720px; background: #601527;" width="1280"></canvas>
+<script src="Build/WebGL.loader.js"></script>
+<script>
+      createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "Build/WebGL.data.gz",
+        frameworkUrl: "Build/WebGL.framework.js.gz",
+        codeUrl: "Build/WebGL.wasm.gz",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "Kulu",
+        productName: "Santy is Home",
+        productVersion: "0.1",
+        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
+        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+      });
+    </script>
+</body>
+</html><!-- hi people
+r0bb13 here
+at least yall know how to open html -->

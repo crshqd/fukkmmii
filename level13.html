@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+
+<html><!--
+⣿⣿⣿⣿⣿⣿⡿⠛⣛⣛⣛⣛⣛⣛⣛⣛⣛⣛⡛⠛⠿⠿⢿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⡿⢃⣴⣿⠿⣻⢽⣲⠿⠭⠭⣽⣿⣓⣛⣛⣓⣲⣶⣢⣍⠻⢿⣿⣿
+⣿⣿⣿⡿⢁⣾⣿⣵⡫⣪⣷⠿⠿⢿⣷⣹⣿⣿⣿⢲⣾⣿⣾⡽⣿⣷⠈⣿⣿
+⣿⣿⠟⠁⣚⣿⣿⠟⡟⠡⠀⠀⠀⠶⣌⠻⣿⣿⠿⠛⠉⠉⠉⢻⣿⣿⠧⡙⢿
+⡿⢡⢲⠟⣡⡴⢤⣉⣛⠛⣋⣥⣿⣷⣦⣾⣿⣿⡆⢰⣾⣿⠿⠟⣛⡛⢪⣎⠈
+⣧⢸⣸⠐⣛⡁⢦⣍⡛⠿⢿⣛⣿⡍⢩⠽⠿⣿⣿⡦⠉⠻⣷⣶⠇⢻⣟⠟⢀
+⣿⣆⠣⢕⣿⣷⡈⠙⠓⠰⣶⣤⣍⠑⠘⠾⠿⠿⣉⣡⡾⠿⠗⡉⡀⠘⣶⢃⣾
+⣿⣿⣷⡈⢿⣿⣿⣌⠳⢠⣄⣈⠉⠘⠿⠿⠆⠶⠶⠀⠶⠶⠸⠃⠁⠀⣿⢸⣿
+⣿⣿⣿⣷⡌⢻⣿⣿⣧⣌⠻⢿⢃⣷⣶⣤⢀⣀⣀⢀⣀⠀⡀⠀⠀⢸⣿⢸⣿
+⣿⣿⣿⣿⣿⣦⡙⠪⣟⠭⣳⢦⣬⣉⣛⠛⠘⠿⠇⠸⠋⠘⣁⣁⣴⣿⣿⢸⣿
+⣿⣿⣿⣿⣿⣿⣿⣷⣦⣉⠒⠭⣖⣩⡟⠛⣻⣿⣿⣿⣿⣿⣟⣫⣾⢏⣿⠘⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣤⣍⡛⠿⠿⣶⣶⣿⣿⣿⣿⣿⣾⣿⠟⣰⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣶⣤⣭⣍⣉⣛⣋⣭⣥⣾⣿⣿
+-->
+<head><base href="https://glcdn.githack.com/3kh0/3kh0-assets/-/raw/main/level13/"/>
+<!--
+	Level 13
+	
+	A text-based science fiction adventure by Noora Routasuo.
+	Based on the Ash.js engine and inspired by several incremental/idle games.
+	
+	See changelog.json for version information.
+	-->
+<meta charset="utf-8"/>
+<title>Level 13</title>
+<meta content="A text-based science fiction adventure game." itemprop="description" name="description" property="og:description"/>
+<meta content="favicon.png" itemprop="image" property="og:image">
+<meta content="Level 13" itemprop="name" property="og:title"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="favicon.ico" rel="shortcut icon"/>
+<link href="favicon.png" rel="image_src"/>
+<link href="css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="css/gridism.css" rel="stylesheet" type="text/css"/>
+<link href="css/main.css" rel="stylesheet" type="text/css"/>
+<link href="favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+</meta></head>
+<body class="wrap wider dark" style="height:100%">
+<div class="sticky-footer-wrapper game-opacity-controller">
+<div class="grid" id="grid-main">
+<div class="unit one-quarter" style="visibility:hidden; padding:1px; height:1px"></div><!-- filler for log -->
+<div class="unit three-quarters" id="unit-main" style="display: none">
+<div class="lvl13-box-2" id="header-self-bar">
+<div class="unit whole notification" id="notification-player">
+<div class="progress-wrap progress" id="notification-player-bar">
+<div class="progress-bar progress"></div>
+<span class="progress-label progress"></span>
+</div>
+</div>
+<ul class="itemlist" id="list-items-perks"></ul>
+<ul class="itemlist" id="list-items-statuses"></ul>
+<div class="stats-indicator" id="stats-vision">
+<span class="label">Vision</span>
+<div class="stats-value-container"><span class="value">0</span><span class="change-indicator" id="vision-change-indicator"></span></div>
+</div>
+<div class="stats-indicator" id="stats-health">
+<span class="label">Health</span>
+<div class="stats-value-container"><span class="value">0</span><span class="change-indicator" id="health-change-indicator"></span></div>
+</div>
+<div class="stats-indicator" id="stats-stamina">
+<span class="label">Stamina</span>
+<div class="stats-value-container"><span class="value">0</span><span class="change-indicator" id="stamina-change-indicator"></span></div>
+</div>
+<div class="stats-indicator" id="stats-scavenge">
+<span class="label">Scavenge<br/>efficiency</span>
+<div class="stats-value-container"><span class="value">0</span><span class="change-indicator" id="scavenge-change-indicator"></span></div>
+</div>
+<div class="stats-indicator" id="stats-scavenge-bonus">
+<span class="label">Scavenge<br/>bonus</span>
+</div>
+<hr/>
+<div id="container-equipment-stats"></div>
+</div>
+<div class="grid" id="grid-main-header">
+<div class="unit whole lvl13-box-1 header-section" id="header-tribe-container">
+<div class="statsbar" id="statsbar-self">
+<div class="stats-indicator" id="stats-evidence">
+<span class="label">Evidence</span>
+<span class="value">0</span>
+<span class="change-indicator" id="evidence-change-indicator"></span>
+</div>
+<div class="stats-indicator" id="stats-rumours">
+<span class="label">Rumours</span>
+<span class="value">0</span>
+<span class="change-indicator" id="rumours-change-indicator"></span>
+</div>
+<span class="stats-indicator" id="stats-favour">
+<span class="label">Favour</span>
+<span class="value">0</span>
+<span class="change-indicator" id="favour-change-indicator"></span>
+</span>
+<span class="statsbar" id="statsbar-deity">
+								Deity: <span id="deity-name">Name</span>
+</span>
+</div>
+</div>
+<div class="unit whole lvl13-box-1" id="header-camp-container">
+<div class="header-section" id="main-header-bag">
+<div class="stats-indicator" id="header-bag-storage">
+<span class="label">Bag capacity</span>
+<span class="value">0</span>
+							/
+							<span class="value-total">0</span>
+</div>
+<div class="stats-indicator" id="header-bag-currency">
+<span class="label">Silver</span>
+<span class="value">0</span>
+</div>
+<div class="statsbar" id="bag-resources"></div>
+</div>
+<div class="header-section" id="main-header-equipment">
+<ul class="itemlist" id="list-header-equipment"></ul>
+</div>
+<div class="header-section" id="main-header-items">
+<ul class="itemlist" id="list-header-followers"></ul>
+<ul class="itemlist" id="list-header-items"></ul>
+</div>
+<div class="header-section" id="main-header-camp">
+<div class="header-section" style="width: 22%">
+<div class="stats-indicator" id="header-camp-storage">
+<span class="label">Storage</span>
+<span class="value">0</span>
+</div>
+<div class="stats-indicator" id="header-camp-reputation">
+<span class="label">Reputation</span>
+<span class="value">0</span>
+<span class="change-indicator" id="reputation-change-indicator"></span>
+</div>
+<div class="stats-indicator" id="header-camp-population">
+<span class="label">Population</span>
+<span class="value">0</span>
+<span class="change-indicator" id="population-change-indicator"></span>
+</div>
+<div class="stats-indicator" id="header-camp-currency">
+<span class="label">Silver</span>
+<span class="value">0</span>
+</div>
+</div>
+<div class="header-section" style="width: 75%; float: right;">
+<div class="statsbar" id="statsbar-resources">
+</div>
+</div>
+</div>
+</div>
+</div><!-- grid for the whole stats bar -->
+<div class="grid">
+<div class="unit whole" id="grid-location-header">
+<img id="level-icon"/>
+<h3 id="in-game-date">Y783</h3>
+<h1>Camp</h1>
+</div>
+</div>
+<div class="grid grid-content" id="grid-switch">
+<div class="unit whole" id="switch">
+<ul class="tabs" id="switch-tabs">
+<li id="switch-out"><span class="name vision-text">Outside</span></li>
+<li id="switch-embark"><span class="name vision-text">Outside</span></li>
+<li id="switch-in"><span class="name vision-text">Camp</span></li>
+<li id="switch-bag"><span class="name vision-text">Bag</span></li>
+<li id="switch-followers"><span class="name vision-text">Party</span></li>
+<li id="switch-map"><span class="name vision-text">Map</span></li>
+<li id="switch-trade"><span class="name vision-text">Trade</span></li>
+<li id="switch-projects"><span class="name vision-text">Projects</span></li>
+<li id="switch-upgrades"><span class="name vision-text">Upgrades</span></li>
+<li id="switch-world"><span class="name vision-text">Tribe</span></li>
+</ul>
+</div>
+</div><!-- grid for the switch -->
+<div class="grid grid-content" id="grid-switch-content">
+<div class="grid" id="grid-tab-header">
+<div class="unit whole" id="tab-header">
+<button class="context btn-meta tabelement tab-options" data-tab="switch-in" id="btn-header-rename" style="display:none">Rename</button>
+<div class="tabelement" data-tab="switch-map" style="display:none;">
+<select class="context tab-options" id="select-header-mapstyle"></select>
+<select class="context tab-options" id="select-header-mapmode"></select>
+<select class="context tab-options" id="select-header-level"></select>
+</div>
+<h2> </h2>
+</div>
+</div><!-- grid for the header" -->
+<!-- vis for camp -->
+<div class="grid tabelement" data-tab="switch-in" id="container-tab-vis-in">
+<div class="unit whole" id="tab-vis-in">
+<div class="vis-container canvas-container" id="tab-vis-in-container">
+<canvas aria-label="camp view" height="10" id="campvis" role="img" width="800"></canvas>
+<div class="vis-camp-layer" id="vis-camp-layer-buildings"></div>
+<div id="vis-camp-info-overlay"><span>Info here</span></div>
+</div>
+</div>
+</div>
+<!-- camp basic stuff: buildings & population -->
+<div class="grid tabelement" data-tab="switch-in" id="container-tab-two-in" style="display:none">
+<div class="unit golden-large">
+<h3>Buildings</h3>
+<div class="actionbox" id="in-improvements">
+<table>
+</table>
+</div>
+</div>
+<div class="unit unit golden-small">
+<div class="infobox" id="in-population">
+<h3>Population</h3>
+<div class="infobox" id="in-population-details" style="display:none">
+<div id="in-population-status">free / diseased</div>
+<div class="info-callout-target" description="Roles that any unassigned workers will be assigned to (when you are not in this camp). If multiple selected, roles with fewest workers get assigned first." id="in-population-autoassigned">Auto-assigned</div>
+<div class="info-callout-target">
+<div id="in-population-robots" style="display: none">0 robots</div>
+</div>
+</div>
+<table class="full-width" id="in-assign-workers">
+</table>
+<p id="in-population-next" style="display:none">Next worker:</p>
+<div class="progress-wrap progress" id="in-population-bar-next">
+<div class="progress-bar progress"></div>
+<span class="progress progress-label"></span>
+</div>
+<span id="in-population-reputation" style="display: none; font-size: 85%">Reputation required: </span>
+</div>
+<div class="infobox" id="in-occurrences">
+<h3>Events</h3>
+<div class="progress-wrap progress" id="in-occurrences-trader">
+<div class="progress-bar progress"></div>
+<span class="progress progress-label">Trader</span>
+</div>
+<div class="progress-wrap progress" id="in-occurrences-recruit">
+<div class="progress-bar progress"></div>
+<span class="progress progress-label">Visitor</span>
+</div>
+<div class="progress-wrap progress warning" data-animation-length="50" id="in-occurrences-raid">
+<div class="progress-bar progress"></div>
+<span class="progress progress-label">Raid!</span>
+</div>
+<div id="in-occurrences-outgoing-caravans-container">
+</div>
+<p class="p-meta" id="in-occurrences-empty">All is quiet in the camp.</p>
+</div>
+<div class="infobox p-dense" id="in-demographics">
+<h3>Details</h3>
+<div id="in-demographics-general">
+<p id="in-demographics-general-age">Founded: <span class="value">-</span></p>
+<p id="in-demographics-general-luxuries">Luxury resources available: <span class="value">-</span></p>
+</div>
+<div id="in-demographics-raid">
+<div class="info-callout-target">
+<p id="in-demographics-raid-danger">Danger from raids: <span class="value"></span></p>
+</div><br/>
+<div class="info-callout-target">
+<p id="in-demographics-raid-defence">Camp defences: <span class="value"></span></p>
+</div>
+<p id="in-demographics-raid-last">Last raid: <span class="value"></span></p>
+</div>
+<div id="in-demographics-level">
+<p id="in-demographics-trade-network">Trade with other camps: <span class="value"></span></p>
+<p id="in-demographics-level-population">Level population density: <span class="value"></span></p>
+<p id="in-demographics-level-danger">Level raid danger: <span class="value"></span></p>
+</div>
+</div>
+</div>
+</div>
+<!-- "embark" page when leaving camp -->
+<div class="grid tabelement" data-tab="switch-embark" id="container-tab-enter-out">
+<div class="unit whole">
+<p>Make sure you pack enough supplies before you leave.</p>
+<div class="grid">
+<div class="unit one-third" id="embark-resources-container">
+<div class="subheader"><h3>Resources</h3></div>
+<table id="embark-resources">
+</table>
+</div>
+<div class="unit two-thirds" id="embark-items-container">
+<div class="subheader"><h3>Items</h3></div>
+<table id="embark-items">
+</table>
+</div>
+</div>
+<p>
+<div class="stats-indicator" id="embark-bag">
+<span class="label">Selected</span>
+<span class="value">0</span>
+								/
+								<span class="value-total">0</span>
+</div>
+</p>
+<div class="actionbox">
+<button action="leave_camp" class="action" id="in-action-leave">Go</button>
+<span class="warning hidden" id="embark-warning"></span>
+</div>
+</div>
+</div>
+<!-- level: minimap and header -->
+<div class="grid tabelement" data-tab="switch-out" id="container-tab-two-out">
+<div class="unit unit-compass" id="out-container-compass">
+<div class="canvas-container" id="minimap-background-container">
+<canvas height="224" id="minimap-background" width="224"></canvas>
+<div class="canvas-container" id="minimap-container" style="width: 198px; height: 198px">
+<canvas aria-label="area map" height="198" id="minimap" role="img" width="198"></canvas>
+</div>
+</div>
+<span class="vision-text" id="out-position-indicator"></span>
+</div>
+<div class="unit unit-rest">
+<h2 id="header-sector">Sector header</h2>
+<div id="out-desc"></div>
+</div>
+</div>
+<div class="grid tabelement" data-tab="switch-out" id="container-tab-two-out-actions" style="display:none;">
+<div class="unit unit-compass" id="out-container-compass-actions">
+<h3>Wander</h3>
+<table id="table-out-actions-movement">
+<tr>
+<td><button action="move_sector_nw" class="action btn-icon action-move tabbutton" data-tab="switch-out" id="out-action-move-nw"><span>NW</span></button></td>
+<td><button action="move_sector_north" class="action btn-icon action-move tabbutton" data-tab="switch-out" id="out-action-move-north"><span>N</span></button></td>
+<td><button action="move_sector_ne" class="action btn-icon action-move tabbutton" data-tab="switch-out" id="out-action-move-ne"><span>NE</span></button></td>
+</tr>
+<tr>
+<td><button action="move_sector_west" class="action btn-icon action-move tabbutton" data-tab="switch-out" id="out-action-move-west"><span>W</span></button></td>
+<td></td>
+<td><button action="move_sector_east" class="action btn-icon action-move tabbutton" data-tab="switch-out" id="out-action-move-east"><span>E</span></button></td>
+</tr>
+<tr>
+<td><button action="move_sector_sw" class="action btn-icon action-move tabbutton" data-tab="switch-out" id="out-action-move-sw"><span>SW</span></button></td>
+<td><button action="move_sector_south" class="action btn-icon action-move tabbutton" data-tab="switch-out" id="out-action-move-south"><span>S</span></button></td>
+<td><button action="move_sector_se" class="action btn-icon action-move tabbutton" data-tab="switch-out" id="out-action-move-se"><span>SE</span></button></td>
+</tr>
+</table>
+<div class="actionbox" id="out-actions-movement">
+<button action="enter_camp" class="action action-location" data-tab="switch-out" id="out-action-enter">Enter camp</button>
+<button action="move_level_up" class="action btn-icon" data-tab="switch-out" id="out-action-move-up"><span>Move up</span></button>
+<button action="move_level_down" class="action btn-icon" data-tab="switch-out" id="out-action-move-down"><span>Move down</span></button>
+<button action="move_camp_level" class="action btn-icon" data-tab="switch-out" id="out-action-move-camp"><span>Back to camp</span></button>
+<p class="p-meta button-detail-label" id="out-action-move-camp-details">(2 blocks)</p>
+</div>
+</div>
+<div class="unit unit-rest">
+<div class="subheader" id="header-out-actions">
+<h3>Search</h3>
+</div>
+<div class="actionbox" id="out-actions">
+<button action="scavenge" class="action action-location tabbutton" data-tab="switch-out" id="out-action-sca">Scavenge</button>
+<button action="scout" class="action action-location" id="out-action-scout">Scout</button>
+<button action="investigate" class="action action-location" id="out-action-investigate">Investigate</button>
+<button action="clear_workshop" class="action action-location" id="out-action-clear-workshop">Scout workshop</button>
+<button action="use_spring" class="action action-location" id="out-action-use-spring">Refill water</button>
+<button action="nap" class="action action-location btn-icon" id="out-action-nap"><span>Rest</span></button>
+<button action="wait" class="action action-location" id="out-action-wait"><span>Wait</span></button>
+<button action="despair" class="action action-location" id="out-action-despair">Despair</button>
+<span id="container-out-actions-movement-related">
+</span>
+</div>
+<div class="subheader" id="header-out-improvements">
+<h3>Build</h3>
+</div>
+<div class="actionbox" id="out-improvements">
+<table>
+<tr id="out-improvements-collector-water">
+<td><button action="build_out_collector_water" class="action action-build action-location" id="out-action-build-bucket">Bucket</button></td>
+<td><button action="improve_out_collector_water" class="action action-improve btn-glyph-big" id="out-action-improve-bucket">▲</button></td>
+<td><button action="use_out_collector_water" class="action action-use action-location btn-narrow" id="out-action-use-bucket">Collect all</button></td>
+<td><button action="use_out_collector_water_one" class="action action-use action-location btn-compact" id="out-action-use-bucket_one">1</button></td>
+<td class="list-storage vision-text"></td>
+</tr><tr id="out-improvements-collector-food">
+<td><button action="build_out_collector_food" class="action action-build action-location" id="out-action-build-trap">Trap</button></td>
+<td><button action="improve_out_collector_food" class="action action-improve btn-glyph-big" id="out-action-improve-trap">▲</button></td>
+<td><button action="use_out_collector_food" class="action action-use action-location btn-narrow" id="out-action-use-trap">Collect all</button></td>
+<td><button action="use_out_collector_food_one" class="action action-use action-location btn-compact" id="out-action-use-trap_one">1</button></td>
+<td class="list-storage vision-text"></td>
+</tr><tr id="out-improvements-beacon">
+<td><button action="build_out_beacon" class="action action-build action-location" id="out-action-build-beacon">Beacon</button></td>
+<td class="list-amount vision-text">0</td>
+</tr><tr id="out-improvements-camp">
+<td><button action="build_out_camp" class="action action-build action-location">Camp</button></td>
+</tr>
+</table>
+</div>
+<div class="actionbox" id="out-locales">
+<div class="subheader">
+<h3>Locations</h3>
+</div>
+<table id="table-out-actions-locales">
+</table>
+</div>
+</div>
+</div>
+<!-- bag main div: item list & crafting -->
+<div class="grid tabelement" data-tab="switch-bag" id="container-tab-two-bag" style="display:none">
+<div class="unit three-quarters">
+<div class="subheader" id="header-bag-equipment"><h3>Equipment</h3></div>
+<div class="infobox" id="container-equipment-slots">
+<div class="item-slot item-slot-big lvl13-box-1" id="item-slot-bag"></div>
+<div class="item-slot item-slot-big lvl13-box-1" id="item-slot-light"></div>
+<div class="item-slot item-slot-big lvl13-box-1" id="item-slot-weapon"></div>
+<div class="item-slot item-slot-big lvl13-box-1" id="item-slot-clothing_over"></div>
+<div class="item-slot item-slot-big lvl13-box-1" id="item-slot-clothing_upper"></div>
+<div class="item-slot item-slot-big lvl13-box-1" id="item-slot-clothing_lower"></div>
+<div class="item-slot item-slot-big lvl13-box-1" id="item-slot-clothing_head"></div>
+<div class="item-slot item-slot-big lvl13-box-1" id="item-slot-clothing_hands"></div>
+<div class="item-slot item-slot-big lvl13-box-1" id="item-slot-shoes"></div>
+</div>
+<div class="subheader" id="header-bag-items"><h3>Other items</h3></div>
+<div class="infobox">
+<ul id="bag-items" style="padding:0px; margin: 0px"></ul>
+<p class="p-meta" id="bag-items-empty">Nothing here</p>
+</div>
+</div>
+<div class="unit one-quarter">
+<div class="subheader" id="header-self-use-items"><h3>Use</h3></div>
+<div class="actionbox" id="self-use-items">
+<table>
+</table>
+</div>
+<div class="subheader" id="header-self-repair-items"><h3>Repair</h3></div>
+<div class="actionbox" id="self-repair-items">
+<table>
+</table>
+</div>
+<div class="subheader"><h3>Craft</h3></div>
+<input class="checkbox" id="checkbox-crafting-show-obsolete" type="checkbox"/><p class="checkbox-label" id="label-crafting-show-obsolete">Show obsolete</p>
+<div class="actionbox" id="self-craft">
+</div>
+</div>
+</div>
+<div class="grid tabelement" data-tab="switch-followers" id="container-tab-two-followers" style="display:none;">
+<div class="unit whole">
+<p class="p-meta" id="followers-max">Maximum followers</p>
+<div class="unit-section" id="tab-followers-section-selected">
+<div class="subheader" id="header-party"><h3>Exploration party</h3></div>
+<div class="infobox" id="container-party-slots">
+</div>
+</div>
+<div class="unit-section" id="tab-followers-section-unselected">
+<div class="subheader" id="header-followers"><h3>Other followers</h3></div>
+<div class="infobox">
+<ul class="itemlist" id="list-followers"></ul>
+<p class="p-meta" id="followers-empty">Nothing here.</p>
+</div>
+</div>
+<div class="unit-section" id="tab-followers-section-recruits">
+<div class="subheader" id="header-recruits"><h3>Visitors</h3></div>
+<p id="recruits-empty-message">No visitors here at the moment.</p>
+<div class="actionbox" id="recruits-container">
+<table></table>
+</div>
+</div>
+</div>
+</div>
+<div class="grid tabelement" data-tab="switch-map" id="container-tab-two-map" style="display:none">
+<div class="unit whole">
+<p id="map-completion-hint">There are still places to explore on this level.</p>
+<div id="mainmap-container-container">
+<div class="canvas-container lvl13-box-1" id="mainmap-container">
+<canvas aria-label="level map" height="500" id="mainmap" role="img" width="500"></canvas>
+<div class="canvas-overlay" id="mainmap-overlay"></div>
+</div>
+</div>
+<div id="mainmap-container-ascii">
+<textarea readonly="" rows="12"></textarea>
+<div class="lvl13-box-1" id="mainmap-ascii-legend"></div>
+</div>
+<div class="lvl13-box-1" id="mainmap-sector-details" style="margin: 5px; padding: 5px;">
+<button aria-label="Next sector" class="context btn-glyph" id="btn-mainmap-sector-details-next">
+<img class="img-themed" data-src-sunlit="img/eldorado/icon-next.png" src="img/eldorado/icon-next-dark.png"/>
+</button>
+<button aria-label="Previous sector" class="context btn-glyph" id="btn-mainmap-sector-details-previous">
+<img class="img-themed" data-src-sunlit="img/eldorado/icon-previous.png" src="img/eldorado/icon-previous-dark.png"/>
+</button>
+<button aria-label="Camp sector" class="context btn-glyph" id="btn-mainmap-sector-details-camp">
+<img class="img-themed" data-src-sunlit="img/map/map-camp.png" src="img/map/map-camp-sunlit.png"/>
+</button>
+<button aria-label="Unvisited sectors" class="context btn-glyph" id="btn-mainmap-sector-details-unvisited">
+<img class="img-themed" data-src-sunlit="img/map/map-unvisited.png" src="img/map/map-unvisited-sunlit.png"/>
+</button>
+<button aria-label="Unscouted sectors" class="context btn-glyph" id="btn-mainmap-sector-details-unscouted">
+<img class="img-themed" data-src-sunlit="img/map/map-interest.png" src="img/map/map-interest-sunlit.png"/>
+</button>
+<button aria-label"sectors="" class="context btn-glyph" id="btn-mainmap-sector-details-ingredients" ingredients"="" with="">
+<img class="img-themed" data-src-sunlit="img/map/map-ingredient.png" src="img/map/map-ingredient-sunlit.png"/>
+</button>
+<div id="mainmap-sector-details-content-empty">
+<h3>Sector details</h3>
+<p class="meta" id="mainmap-sector-details-empty-text-canvas">Click on a sector to see details.</p>
+<p class="meta" id="mainmap-sector-details-empty-text-ascii">Select a sector to see details.</p>
+</div>
+<div id="mainmap-sector-details-content">
+<h3><span id="mainmap-sector-details-name">Sector</span> <span id="mainmap-sector-details-pos"></span></h3>
+<table class="spacious full-width">
+<tr><td class="textwidth">District:</td><td><span id="mainmap-sector-details-district"></span></td></tr>
+<tr><td class="textwidth">Distance:</td><td><span id="mainmap-sector-details-distance"></span> <button class="btn-meta" id="btn-mainmap-sector-path">(directions)</button></td></tr>
+<tr><td class="textwidth">Points of interest:</td><td><span id="mainmap-sector-details-poi"></span></td></tr>
+<tr><td class="textwidth">Scavenging:</td><td><span id="mainmap-sector-details-res-sca"></span></td></tr>
+<tr><td class="textwidth">Collectors:</td><td><span id="mainmap-sector-details-res-col"></span></td></tr>
+<tr><td class="textwidth">Threats:</td><td><span id="mainmap-sector-details-threats"></span></td></tr>
+<tr><td class="textwidth">Blockers:</td><td><span id="mainmap-sector-details-blockers"></span></td></tr>
+<tr><td class="textwidth">Environment:</td><td><span id="mainmap-sector-details-env"></span></td></tr>
+</table>
+</div>
+<div id="mainmap-sector-details-content-debug">
+<button class="meta" id="btn-cheat-teleport">Teleport</button>
+<span id="mainmap-sector-debug-text"></span>
+</div>
+</div>
+</div>
+</div>
+<div class="grid tabelement" data-tab="switch-trade" id="container-tab-trade" style="display:none">
+<div class="unit whole">
+<div class="subheader"><h3>Incoming caravans</h3></div>
+<p id="trade-caravans-incoming-empty-message">No traders here at the moment.</p>
+<div class="actionbox" id="trade-caravans-incoming-container">
+<table></table>
+</div>
+<div class="subheader"><h3>Trade partners</h3></div>
+<p id="trade-caravans-outgoing-empty-message">No trade partners discovered yet.</p>
+<div class="actionbox" id="trade-caravans-outgoing-container">
+<table></table>
+</div>
+<p id="trade-caravans-outgoing-num">Available caravans:</p>
+</div>
+</div>
+<div class="grid tabelement" data-tab="switch-projects" id="container-tab-two-projects" style="display:none">
+<div class="unit whole">
+<div class="actionbox" id="container-in-improvements-colony">
+<div class="subheader"><h3>Colony projects</h3></div>
+<div class="actionbox" id="in-improvements-colony">
+<table class="fullwidth"></table>
+</div>
+<div class="actionbox" id="in-improvements-colony-built">
+<table class="fullwidth"></table>
+</div>
+<button action="launch" class="action" id="in-action-launch">Launch</button>
+</div>
+<div class="infobox">
+<div class="subheader"><h3 id="header-in-improvements-level">Available projects</h3></div>
+<div class="actionbox" id="in-improvements-level">
+<table class="fullwidth"></table>
+</div>
+<p id="in-improvements-level-empty-message">There are no building projects available. Explore the map to find some.</p>
+</div>
+<div id="container-in-improvements-level-hidden">
+<button class="btn-meta btn-meta-float" id="in-improvements-reset-hidden">reset</button>
+<div class="subheader"><h3 id="header-in-improvements-level-hidden">Hidden projects</h3></div>
+<p id="in-improvements-hidden-message">There are no building projects available.</p>
+</div>
+<div class="subheader"><h3 id="header-in-improvements-level-built">Built projects</h3></div>
+<div class="actionbox" id="in-improvements-level-built">
+<table class="fullwidth"></table>
+</div>
+</div>
+</div>
+<div class="grid tabelement" data-tab="switch-blueprints" id="container-tab-two-blueprints" style="display:none;">
+<div class="unit whole">
+</div>
+</div>
+<div class="grid tabelement" data-tab="switch-upgrades" id="container-tab-two-upgrades" style="display: none;">
+<div class="unit whole">
+<div class="actionbox" id="world-blueprints">
+<div class="subheader"><h3>Blueprints</h3></div>
+<table class="fullwidth" id="blueprints-list">
+</table>
+</div>
+<div class="actionbox" id="world-upgrades">
+<div class="subheader"><h3>Available upgrades</h3></div>
+<table class="fullwidth spacious" id="upgrades-list">
+</table>
+<p id="world-upgrades-empty-message">No available upgrades at the moment.</p>
+</div>
+<div class="infobox" id="world-upgrades-info">
+<div class="subheader"><h3>All upgrades</h3></div>
+<p id="world-upgrades-count">Completed upgrades: 0</p>
+<div class="infobox">
+<div class="canvas-container lvl13-box-1" id="researched-upgrades-vis-container">
+<canvas aria-label="technology tree" height="100" id="researched-upgrades-vis" role="img" width="100"></canvas>
+<div class="canvas-overlay" id="upgrades-vis-overlay"></div>
+</div>
+<div class="lvl13-box-1" id="upgrade-details" style="margin: 5px; padding: 5px;">
+<div id="upgrade-details-content-empty">
+<h4>Upgrade details</h4>
+<p class="meta">Click on an upgrade to see details.</p>
+</div>
+<div id="upgrade-details-content">
+<span class="status-badge" id="upgrade-details-status">Status</span>
+<h4 id="upgrade-details-name">Upgrade name</h4>
+<p>
+<span id="upgrade-details-desc">Upgrade description</span><br/>
+<span class="p-meta" id="upgrade-details-effect">Upgrade effects</span>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid tabelement" data-tab="switch-world" id="container-tab-two-world" style="display:none">
+<div class="unit whole">
+<div class="infobox">
+<div class="subheader"><h3>Messages</h3></div>
+<p id="world-message">No news from other camps at the moment.</p>
+<div class="subheader"><h3>Camp overview</h3></div>
+<table class="full-width dense" id="camp-overview">
+<tr class="lvl13-box-1 header-mini" id="camp-overview-header">
+<th class="th-text" colspan="2"></th>
+<th class="th-number">pop</th>
+<th class="th-number">rep</th>
+<th class="th-number">raid</th>
+<th class="th-number">storage</th>
+<th class="th-text">production</th>
+<th class="th-text">stats</th>
+<th class="th-number"></th>
+<th class="th-number"></th>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="grid tabelement" data-tab="switch-milestones" id="container-tab-two-milestones" style="display:none">
+<div class="unit whole">
+<div class="subheader"><h3>Current level</h3></div>
+<p id="milestone-current-name">Current tribe level:</p>
+<p id="milestone-current-description">This is the beginning of something.</p>
+<div class="subheader"><h3>Next level</h3></div>
+<p id="milestone-next-name">Next tribe level:</p>
+<p id="milestone-next-description">With a few more people, we could call this a tribe.</p>
+<div class="columns-container columns-container-vcenter" id="milestone-container"></div>
+</div>
+</div>
+</div><!-- main switch content grid -->
+</div><!-- main unit: the whole 3/4 right of the log -->
+<div class="unit one-quarter limit-height" id="log">
+<div class="lvl13-fade-down" id="log-overlay"></div>
+<ul></ul>
+</div>
+</div><!-- main grid -->
+<div class="grid sticky-footer-push"></div>
+</div><!-- sticky footer wrap -->
+<div class="grid sticky-footer">
+<div class="unit one-quarter" style="visibility:hidden"></div>
+<div class="unit three-quarters" id="footer">
+<span class="p-meta" id="game-version"></span>
+<span class="p-meta" id="game-msg"></span>
+<ul id="game-options-extended" style="display:none">
+<li><button class="btn-meta" id="btn-info">Info</button></li>
+<li><button class="btn-meta" id="btn-importexport">Import/export</button></li>
+<li><span>:</span></li>
+</ul>
+<ul id="game-options">
+<li><button class="btn-meta" id="btn-more">More</button>
+<li><button class="btn-meta" id="btn-restart">Restart</button></li>
+<li><button class="btn-meta" id="btn-save">Save</button></li>
+</li></ul>
+</div>
+</div><!-- sticky footer -->
+<div class="popup fill-on-mobiles hidden-by-default popup-ingame" id="fight-popup" style="display:none">
+<h3 id="fight-title"></h3>
+<p id="fight-desc"></p>
+<div class="infobox" id="fight-popup-enemy-info">
+<div class="container-relative">
+<p class="nomargin" id="fight-popup-enemy-name">Enemy name &amp; strength</p>
+<div class="fight-damage-indicator" id="fight-damage-indictor-enemy">-5</div>
+<div class="fight-status-indicator" id="fight-status-indictor-enemy">dodge</div>
+</div>
+<p class="nomargin" id="fight-popup-enemy-stats">Enemy strength</p>
+<p class="nomargin" id="fight-popup-enemy-difficulty">Enemy difficulty</p>
+</div>
+<div id="fight-popup-bars">
+<div class="progress-multibar-container progress centered">
+<div class="progress-wrap progress" id="fight-bar-enemy">
+<div class="progress-bar progress"></div>
+<div class="progress-bar-change progress"></div>
+</div>
+<div class="progress-wrap progress-wrap-science progress" id="fight-bar-enemy-shield">
+<div class="progress-bar progress"></div>
+<div class="progress-bar-change progress"></div>
+</div>
+</div>
+<div class="progress-multibar-container progress centered">
+<div class="progress-wrap progress" id="fight-bar-self">
+<div class="progress-bar progress"></div>
+<div class="progress-bar-change progress"></div>
+</div>
+<div class="progress-wrap progress-wrap-science progress" id="fight-bar-self-shield">
+<div class="progress-bar progress"></div>
+<div class="progress-bar-change progress"></div>
+</div>
+</div>
+</div>
+<div class="infobox" id="fight-popup-self-info">
+<div class="container-relative">
+<p class="nomargin" id="fight-popup-self-name">Player name</p>
+<div class="fight-damage-indicator" id="fight-damage-indictor-self">-5</div>
+<div class="fight-status-indicator" id="fight-status-indictor-self">dodge</div>
+</div>
+<p class="nomargin" id="fight-popup-self-stats">Player strength</p>
+<span id="fight-popup-self-equipment"></span>
+</div>
+<div class="container-nomargin" id="fight-popup-items">
+<ul class="itemlist" id="list-fight-items" style="margin-top: -10px;"></ul>
+<span id="fight-popup-itemlist-separator">|</span>
+<ul class="itemlist" id="list-fight-followers" style="margin-top: -10px;"></ul>
+</div>
+<div class="buttonbox" id="fight-buttons-infightactions"></div>
+<div id="fight-popup-results"></div>
+<div class="buttonbox" id="fight-buttons-main">
+<button action="flee" class="action action-manual-trigger" id="out-action-fight-cancel">Flee</button>
+<button action="fight" class="action" id="out-action-fight-confirm">Fight</button>
+<button id="out-action-fight-close">Leave</button>
+<button id="out-action-fight-continue">Continue</button>
+<button action="accept_inventory" class="action inventory-selection-ok" id="out-action-fight-takeselected">Continue</button>
+<button action="take_all" class="action inventory-selection-takeall" id="out-action-fight-takeall">Take all</button>
+</div>
+</div>
+<div class="popup popup-wide fill-on-mobiles hidden-by-default popup-ingame" id="incoming-caravan-popup" style="display:none">
+<h3>Trader</h3>
+<p id="incoming-caravan-popup-markup"></p>
+<div class="inventorybox" style="display:flex">
+<div class="inventorydivision" id="inventorylist-incoming-caravan-camp-inventory" style="width: 170px">
+<p class="inventorybox-header">Camp inventory</p>
+<ul></ul>
+<p class="msg-empty">(empty)</p>
+</div>
+<div class="inventorydivision inventorydivision-with-footer highlightbox" id="inventorylist-incoming-caravan-camp-offer" style="width: 130px">
+<p class="inventorybox-header">Camp offer</p>
+<ul></ul>
+<p class="msg-empty">(empty)</p>
+<p class="value inventorybox-footer">0
+</p></div>
+<div class="inventorydivision inventorydivision-with-footer highlightbox" id="inventorylist-incoming-caravan-trader-offer" style="width: 130px">
+<p class="inventorybox-header">Trader offer</p>
+<ul></ul>
+<p class="msg-empty">(empty)</p>
+<p class="value inventorybox-footer">0
+</p></div>
+<div class="inventorydivision" id="inventorylist-incoming-caravan-trader-inventory" style="width: 170px">
+<p class="inventorybox-header">Trader inventory</p>
+<ul></ul>
+<p class="msg-empty">(empty)</p>
+</div>
+</div>
+<div id="incoming-caravan-popup-multiplier"></div>
+<div class="buttonbox" id="incoming-caravan-buttons-main">
+<button id="incoming-caravan-popup-cancel">Cancel</button>
+<button id="incoming-caravan-popup-reset">Reset</button>
+<button action="trade_with_caravan" class="action" id="incoming-caravan-popup-confirm">Trade</button>
+</div>
+</div>
+<div class="popup fill-on-mobiles hidden-by-default popup-ingame" id="manage-save-popup" style="display:none">
+<h3>Export / import save</h3>
+<p>Export / import your save data for backup or to continue playing on another computer.<br/>Note that the game is still in alpha and updates can break old saves.</p>
+<p>Your world seed: <span id="save-seed">?</span><br/>Current version: <span id="save-version">?</span></p>
+<div class="infobox">
+<textarea cols="60" id="manage-save-textarea" rows="5"></textarea>
+</div>
+<p class="warning" id="manage-save-warning"></p>
+<p id="manage-save-msg"></p>
+<div class="buttonbox" id="load-import-container">
+<button id="load-import">Load</button>
+</div>
+<div class="buttonbox">
+<button id="open-export">Export</button>
+<button id="open-import">Import</button>
+<button id="close-manage-save-popup">Close</button>
+</div>
+</div>
+<div class="popup fill-on-mobiles hidden-by-default popup-ingame" id="common-popup" style="display:none">
+<h3></h3>
+<p id="common-popup-desc"></p>
+<p id="common-popup-input-container"><input autocomplete="false" autofocus="true" class="text"/></p>
+<div id="info-results"></div>
+<div class="buttonbox"></div>
+</div>
+<div id="vision-overlay"></div>
+<div class="thinking-content">
+<div class="loading-spinner">
+<div class="loading-dot loading-dot1"></div>
+<div class="loading-dot loading-dot2"></div>
+<div class="loading-dot loading-dot3"></div>
+</div>
+</div>
+<div class="loading-content">
+<div class="loading-spinner">
+<div class="loading-dot loading-dot1"></div>
+<div class="loading-dot loading-dot2"></div>
+<div class="loading-dot loading-dot3"></div>
+</div>
+</div>
+<!-- Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-118652515-1"></script>
+<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-118652515-1', {
+			'app_name': 'Level13',
+			'custom_map': { 'dimension1': 'world_seed', 'dimension2': 'max_level', 'dimension3': 'max_camp' },
+		});
+	</script>
+<!-- RequireJS -->
+<script data-main="src/config" src="lib/requirejs/require.min.js"></script>
+</body>
+</html><!-- hi people
+r0bb13 here
+at least yall know how to open html -->
