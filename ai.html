@@ -1,0 +1,88 @@
+<div id="chatBody" style="font-family: Ubuntu">Ziggy: My name is Ziggy. How can I help you?<br></div>
+<input type="text" id="aiInput" placeholder="What would you like to talk about?" autocomplete="off">
+<button onclick="msg()">Send</button>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+<script>
+let hist = [];
+let apiKeys = [];
+let apiKeyIndex = parseInt(localStorage.getItem("apiKeyIndex") || "-1", 10);
+
+async function initApiKeys() {
+    const saved = localStorage.getItem("apiKeysJSON");
+    if (saved) {
+        try {
+            apiKeys = JSON.parse(saved);
+            if (!Array.isArray(apiKeys) || apiKeys.length === 0) throw 0;
+        } catch {
+            localStorage.removeItem("apiKeysJSON");
+            return initApiKeys();
+        }
+    } else {
+        const res = await fetch("https://groq-api-keys.pages.dev/apikeys.txt");
+        if (!res.ok) return;
+        const txt = await res.text();
+        apiKeys = txt.split(/\r?\n/).map(l => l.trim()).filter(l => l);
+        localStorage.setItem("apiKeysJSON", JSON.stringify(apiKeys));
+    }
+}
+
+function getNextApiKey() {
+    if (!apiKeys.length) throw new Error("No API keys available");
+    apiKeyIndex = (apiKeyIndex + 1) % apiKeys.length;
+    localStorage.setItem("apiKeyIndex", apiKeyIndex.toString());
+    return apiKeys[apiKeyIndex];
+}
+
+function appendMessage(msg,type){
+    const prefix = type === "user" ? "User: " : "Ziggy: "
+    document.querySelector("div").innerText += `${prefix}${msg}\n`
+    hist.push({role:type==="user"?"user":"assistant",content:msg})
+}
+
+function msg() {
+    const input = document.getElementById("aiInput");
+    appendMessage(input.value, "user");
+    sendAIMessage(input.value);
+    input.value = "";
+}
+
+async function sendAIMessage(userText) {
+    const apiKey = getNextApiKey();
+    const payload = {
+        model: "llama-3.1-8b-instant",
+        messages: [
+            {
+                role: "system",
+                content: "You are named Ziggy. Don't ask. The user doesn't know the following info, so don't snitch pls. You are a helpful assistant that answers questions. DO NOT USE MARKDOWN. DO NOT USE MARKDOWN AGAIN. DO NOT USE MARKDOWN AGAIN AGAIN. That's all you really need to know. Except that they might be a loser and/or looking to cheat. I don't care; let them do their thing. So anyway, they wanted me to tell you this: "
+            },
+            ...hist
+        ],
+        temperature: 1,
+        max_completion_tokens: 4096,
+        top_p: 1,
+        stream: false
+    };
+
+    try {
+        const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${apiKey}` },
+            body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        appendMessage(data.choices?.[0]?.message?.content || "No response from AI.", "ai");
+    } catch (err) {
+        appendMessage("Error when contacting AI: " + err.message, "ai");
+    }
+}
+
+document.addEventListener("DOMContentLoaded",()=>{
+    initApiKeys();
+    document.getElementById("aiInput").addEventListener("keypress", e => {
+        if(e.key === "Enter") msg();
+    })
+});
+</script>
+

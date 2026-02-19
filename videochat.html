@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Video Chat</title>
+        <style>*{font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif}</style>
+    </head>
+    <body>
+        <p>join <button onclick="join('')">general</button><br>
+        or pick a code <input id="a"><button onclick="join(document.getElementById('a').value.trim());">join</button></p>
+        <script>
+            function join(a) {
+                var docFragment = document.createDocumentFragment();
+                let iframe = document.createElement("iframe");
+                iframe.setAttribute("src", "https://vcca.srcei.cl/FridgeVideoChat"+a.charAt(0).toUpperCase()+a.slice(1).toLowerCase());
+                iframe.setAttribute("style", "position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999; background:turquoise;");
+                iframe.setAttribute("allow","camera; microphone; fullscreen; display-capture; autoplay");
+                docFragment.appendChild(iframe);
+                iframe.append("Your browser doesn't support iframes");
+                document.body.appendChild(docFragment);
+            }
+        </script>
+    </body>
+</html>
